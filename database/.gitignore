@@ -1,0 +1,53 @@
+# Arquivos de ambiente
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Arquivos de dados
+data/
+postgres_data/
+*.dump
+*.sql.gz
+*.backup
+*.bak
+
+# Arquivos de log
+*.log
+pg_log/
+
+# Arquivos temporários
+tmp/
+temp/
+.temp/
+
+# Arquivos de configuração local que não devem ser versionados
+*.local.conf
+*.local.sql
+
+# Arquivos de certificado
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Arquivos de IDE
+.idea/
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos de backup
+*~
+*.swp
+*.swo

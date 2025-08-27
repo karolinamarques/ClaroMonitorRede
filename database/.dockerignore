@@ -1,0 +1,50 @@
+# Arquivos de controle de versão
+.git
+.gitignore
+.gitattributes
+
+# Arquivos de ambiente
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Arquivos de dados que não devem ser incluídos na imagem
+data/
+postgres_data/
+*.dump
+*.sql.gz
+*.backup
+*.bak
+
+# Arquivos de log
+*.log
+pg_log/
+
+# Arquivos de IDE
+.idea
+.vscode
+*.sublime-project
+*.sublime-workspace
+
+# Arquivos de documentação
+docs
+*.md
+LICENSE
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# Arquivos temporários
+tmp/
+temp/
+.temp/
+
+# Arquivos de backup
+*~
+*.swp
+*.swo

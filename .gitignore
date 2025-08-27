@@ -1,0 +1,83 @@
+# Arquivos de ambiente
+.env
+.env.local
+.env.development
+.env.test
+.env.production
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Dependências
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Arquivos de build
+build/
+out/
+.next/
+
+# Arquivos de cache
+.cache/
+.parcel-cache/
+.npm
+.eslintcache
+.stylelintcache
+
+# Arquivos de cobertura de testes
+coverage/
+.nyc_output/
+
+# Arquivos temporários
+tmp/
+temp/
+.temp/
+
+# Arquivos de banco de dados local
+*.sqlite
+*.sqlite3
+*.db
+
+# Volumes Docker
+postgres_data/
+mongodb_data/
+redis_data/
+
+# Arquivos de certificado
+*.pem
+*.key
+*.crt
+*.cer
+*.p12
+
+# Arquivos de backup
+*.bak
+*.backup
+*~
+*.swp
+
+# Arquivos de configuração local
+.npmrc
+.yarnrc
+.prettierrc.local
+.eslintrc.local
