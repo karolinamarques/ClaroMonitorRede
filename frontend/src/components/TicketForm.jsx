@@ -3,89 +3,137 @@ import { createTicket } from '../api';
 import styled from 'styled-components';
 
 const FormContainer = styled.div`
-  max-width: 600px;
-  margin: 0 auto;
-  padding: 20px;
-  background-color: #f9f9f9;
+  width: 100%;
+  padding: 30px;
+  background-color: #fff;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+`;
+
+const Title = styled.h2`
+  color: #2c3e50;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
 `;
 
 const FormGroup = styled.div`
-  margin-bottom: 20px;
+  margin-bottom: 24px;
 `;
 
 const Label = styled.label`
   display: block;
   margin-bottom: 8px;
-  font-weight: bold;
+  font-weight: 600;
+  color: #34495e;
 `;
 
 const Input = styled.input`
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
+  transition: border-color 0.3s;
+  
+  &:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
 `;
 
 const TextArea = styled.textarea`
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: 1px solid #ddd;
   border-radius: 4px;
   font-size: 16px;
   min-height: 150px;
+  transition: border-color 0.3s;
+  
+  &:focus {
+    border-color: #3498db;
+    outline: none;
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.2);
+  }
 `;
 
 const Button = styled.button`
-  background-color: #4CAF50;
+  background-color: #3498db;
   color: white;
-  padding: 12px 20px;
+  padding: 14px 24px;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   font-size: 16px;
+  font-weight: 600;
+  transition: background-color 0.3s;
   
   &:hover {
-    background-color: #45a049;
+    background-color: #2980b9;
   }
   
   &:disabled {
-    background-color: #cccccc;
+    background-color: #95a5a6;
     cursor: not-allowed;
   }
 `;
 
-const ErrorMessage = styled.p`
-  color: #f44336;
-  margin-top: 10px;
+const ErrorMessage = styled.div`
+  color: #e74c3c;
+  padding: 12px;
+  margin: 10px 0 20px;
+  background-color: #fadbd8;
+  border-radius: 4px;
+  font-weight: 500;
 `;
 
-const SuccessMessage = styled.p`
-  color: #4CAF50;
-  margin-top: 10px;
+const SuccessMessage = styled.div`
+  color: #27ae60;
+  padding: 12px;
+  margin: 10px 0 20px;
+  background-color: #d5f5e3;
+  border-radius: 4px;
+  font-weight: 500;
+`;
+
+const CharCount = styled.div`
+  text-align: right;
+  font-size: 0.8rem;
+  color: ${props => props.isNearLimit ? '#e74c3c' : '#7f8c8d'};
+  margin-top: 4px;
 `;
 
 const TicketForm = () => {
-    const [titulo, setTitulo] = useState('');
-    const [descricao, setDescricao] = useState('');
+    const [formData, setFormData] = useState({
+        titulo: '',
+        descricao: ''
+    });
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
 
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({
+            ...prev,
+            [name]: value
+        }));
+    };
+
     const validateForm = () => {
-        if (!titulo.trim()) {
+        if (!formData.titulo.trim()) {
             setError('O título é obrigatório.');
             return false;
         }
         
-        if (!descricao.trim()) {
+        if (!formData.descricao.trim()) {
             setError('A descrição é obrigatória.');
             return false;
         }
         
-        if (titulo.length > 100) {
+        if (formData.titulo.length > 100) {
             setError('O título deve ter no máximo 100 caracteres.');
             return false;
         }
@@ -105,9 +153,11 @@ const TicketForm = () => {
         setIsSubmitting(true);
 
         try {
-            await createTicket({ titulo, descricao });
-            setTitulo('');
-            setDescricao('');
+            await createTicket(formData);
+            setFormData({
+                titulo: '',
+                descricao: ''
+            });
             setSuccess('Ticket criado com sucesso!');
             
             // Limpa a mensagem de sucesso após 5 segundos
@@ -119,30 +169,37 @@ const TicketForm = () => {
         }
     };
 
+    const isTitleNearLimit = formData.titulo.length > 80;
+
     return (
         <FormContainer>
-            <h2>Abrir Novo Ticket</h2>
+            <Title>Abrir Novo Ticket</Title>
             <form onSubmit={handleSubmit}>
                 <FormGroup>
                     <Label htmlFor="titulo">Título:</Label>
                     <Input
                         id="titulo"
+                        name="titulo"
                         type="text"
-                        value={titulo}
-                        onChange={(e) => setTitulo(e.target.value)}
-                        placeholder="Digite o título do ticket"
+                        value={formData.titulo}
+                        onChange={handleChange}
+                        placeholder="Digite um título claro e objetivo"
                         maxLength="100"
                         disabled={isSubmitting}
                     />
+                    <CharCount isNearLimit={isTitleNearLimit}>
+                        {formData.titulo.length}/100 caracteres
+                    </CharCount>
                 </FormGroup>
                 
                 <FormGroup>
                     <Label htmlFor="descricao">Descrição:</Label>
                     <TextArea
                         id="descricao"
-                        value={descricao}
-                        onChange={(e) => setDescricao(e.target.value)}
-                        placeholder="Descreva o problema em detalhes"
+                        name="descricao"
+                        value={formData.descricao}
+                        onChange={handleChange}
+                        placeholder="Descreva o problema em detalhes. Quanto mais informações você fornecer, mais rápido poderemos ajudar."
                         disabled={isSubmitting}
                     />
                 </FormGroup>

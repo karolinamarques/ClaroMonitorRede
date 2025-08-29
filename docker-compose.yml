@@ -13,6 +13,9 @@ services:
       - backend
     networks:
       - tickets-network
+    labels:
+      - "com.dynatrace.monitoring=true"
+      - "com.dynatrace.service=frontend"
 
   backend:
     build: ./backend
@@ -27,10 +30,15 @@ services:
       - DB_PASSWORD=${DB_PASSWORD:-postgres}
       - DB_HOST=db
       - DB_PORT=5432
+      - DT_CUSTOM_PROP=service=backend   # tag extra para Dynatrace
     depends_on:
-      - db
+      db:
+        condition: service_healthy
     networks:
       - tickets-network
+    labels:
+      - "com.dynatrace.monitoring=true"
+      - "com.dynatrace.service=backend"
 
   db:
     build: ./database
@@ -40,8 +48,9 @@ services:
       - POSTGRES_USER=${DB_USER:-postgres}
       - POSTGRES_PASSWORD=${DB_PASSWORD:-postgres}
       - POSTGRES_DB=${DB_NAME:-tickets_db}
+      - DT_CUSTOM_PROP=service=db   # tag extra para Dynatrace
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
     networks:
@@ -51,6 +60,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    labels:
+      - "com.dynatrace.monitoring=true"
+      - "com.dynatrace.service=database"
 
 networks:
   tickets-network:

@@ -1,9 +1,21 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { getTickets, updateTicket } from '../api';
 import styled from 'styled-components';
 
 const Container = styled.div`
   padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+`;
+
+const Title = styled.h2`
+  color: #2c3e50;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
 `;
 
 const FilterContainer = styled.div`
@@ -13,15 +25,17 @@ const FilterContainer = styled.div`
 `;
 
 const FilterButton = styled.button`
-  padding: 8px 16px;
-  background-color: ${props => props.active ? '#4CAF50' : '#f1f1f1'};
-  color: ${props => props.active ? 'white' : 'black'};
+  padding: 10px 16px;
+  background-color: ${props => props.active ? '#3498db' : '#f1f1f1'};
+  color: ${props => props.active ? 'white' : '#333'};
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
   
   &:hover {
-    background-color: ${props => props.active ? '#45a049' : '#ddd'};
+    background-color: ${props => props.active ? '#2980b9' : '#ddd'};
   }
 `;
 
@@ -31,39 +45,50 @@ const Table = styled.table`
   margin-top: 20px;
 
   th, td {
-    padding: 12px;
+    padding: 14px;
     text-align: left;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #eee;
   }
 
   th {
     background-color: #f8f9fa;
-    font-weight: bold;
+    font-weight: 600;
+    color: #7f8c8d;
   }
 
   tr:hover {
-    background-color: #f5f5f5;
+    background-color: #f9f9f9;
   }
 `;
 
 const StatusBadge = styled.span`
-  padding: 4px 8px;
-  border-radius: 12px;
-  background-color: ${props => props.status === 'aberto' ? '#4CAF50' : '#f44336'};
+  display: inline-block;
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  background-color: ${props => {
+    switch (props.status) {
+      case 'aberto': return '#e74c3c';
+      case 'fechado': return '#2ecc71';
+      default: return '#95a5a6';
+    }
+  }};
   color: white;
-  font-size: 14px;
 `;
 
 const ActionButton = styled.button`
-  padding: 6px 12px;
-  background-color: #f44336;
+  padding: 8px 14px;
+  background-color: ${props => props.color || '#e74c3c'};
   color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s ease;
   
   &:hover {
-    background-color: #d32f2f;
+    opacity: 0.9;
   }
   
   &:disabled {
@@ -72,12 +97,36 @@ const ActionButton = styled.button`
   }
 `;
 
-const ErrorMessage = styled.div`
-  color: #f44336;
-  padding: 10px;
-  margin: 10px 0;
-  background-color: #ffebee;
+const ViewButton = styled(Link)`
+  padding: 8px 14px;
+  background-color: #3498db;
+  color: white;
+  border: none;
   border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  text-decoration: none;
+  display: inline-block;
+  margin-right: 8px;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    background-color: #2980b9;
+  }
+`;
+
+const ButtonGroup = styled.div`
+  display: flex;
+  gap: 8px;
+`;
+
+const ErrorMessage = styled.div`
+  color: #e74c3c;
+  padding: 12px;
+  margin: 10px 0;
+  background-color: #fadbd8;
+  border-radius: 4px;
+  font-weight: 500;
 `;
 
 const LoadingSpinner = styled.div`
@@ -86,7 +135,7 @@ const LoadingSpinner = styled.div`
   height: 20px;
   border: 3px solid rgba(0,0,0,0.1);
   border-radius: 50%;
-  border-top-color: #4CAF50;
+  border-top-color: #3498db;
   animation: spin 1s ease-in-out infinite;
   
   @keyframes spin {
@@ -97,8 +146,19 @@ const LoadingSpinner = styled.div`
 const EmptyState = styled.div`
   text-align: center;
   padding: 40px;
-  color: #666;
+  color: #7f8c8d;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  margin-top: 20px;
 `;
+
+const translateStatus = (status) => {
+  const statusMap = {
+    'aberto': 'Aberto',
+    'fechado': 'Fechado'
+  };
+  return statusMap[status] || status;
+};
 
 const TicketList = () => {
     const [tickets, setTickets] = useState([]);
@@ -131,14 +191,14 @@ const TicketList = () => {
         fetchTickets();
     }, [filter]);
 
-    const handleCloseTicket = async (id) => {
+    const handleUpdateStatus = async (id, newStatus) => {
         try {
             setProcessingId(id);
-            await updateTicket(id, { status: 'fechado' });
+            await updateTicket(id, { status: newStatus });
             fetchTickets();
         } catch (error) {
-            setError('Falha ao fechar o ticket. Por favor, tente novamente.');
-            console.error('Erro ao fechar ticket:', error);
+            setError('Falha ao atualizar o ticket. Por favor, tente novamente.');
+            console.error('Erro ao atualizar ticket:', error);
         } finally {
             setProcessingId(null);
         }
@@ -146,12 +206,19 @@ const TicketList = () => {
 
     const formatDate = (dateString) => {
         if (!dateString) return '-';
-        return new Date(dateString).toLocaleString();
+        const options = { 
+            year: 'numeric', 
+            month: 'short', 
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        };
+        return new Date(dateString).toLocaleDateString('pt-BR', options);
     };
 
     return (
         <Container>
-            <h2>Lista de Tickets</h2>
+            <Title>Lista de Tickets</Title>
             
             <FilterContainer>
                 <FilterButton 
@@ -203,24 +270,31 @@ const TicketList = () => {
                                 <td>{ticket.titulo}</td>
                                 <td>
                                     <StatusBadge status={ticket.status}>
-                                        {ticket.status}
+                                        {translateStatus(ticket.status)}
                                     </StatusBadge>
                                 </td>
                                 <td>{formatDate(ticket.data_abertura)}</td>
                                 <td>{formatDate(ticket.data_fechamento)}</td>
                                 <td>
-                                    {ticket.status === 'aberto' && (
-                                        <ActionButton 
-                                            onClick={() => handleCloseTicket(ticket.id)}
-                                            disabled={processingId === ticket.id}
-                                        >
-                                            {processingId === ticket.id ? (
-                                                <LoadingSpinner />
-                                            ) : (
-                                                'Fechar Ticket'
-                                            )}
-                                        </ActionButton>
-                                    )}
+                                    <ButtonGroup>
+                                        <ViewButton to={`/tickets/${ticket.id}`}>
+                                            Visualizar
+                                        </ViewButton>
+                                        
+                                        {ticket.status === 'aberto' && (
+                                            <ActionButton 
+                                                onClick={() => handleUpdateStatus(ticket.id, 'fechado')}
+                                                disabled={processingId === ticket.id}
+                                                color="#2ecc71"
+                                            >
+                                                {processingId === ticket.id ? (
+                                                    <LoadingSpinner />
+                                                ) : (
+                                                    'Fechar'
+                                                )}
+                                            </ActionButton>
+                                        )}
+                                    </ButtonGroup>
                                 </td>
                             </tr>
                         ))}
