@@ -14,6 +14,11 @@ Cada componente possui seu próprio README com informações detalhadas:
 - [README do Frontend](frontend/README.md)
 - [README do Banco de Dados](database/README.md)
 
+Outros requisitos da apresentação possuem seus próprios READMEs com informações detalhadas:
+- [README do Splunk](other-requirements/splunk/README.md)
+- [README do Mokkup.ai](other-requirements/mokkup.ai/README.md)
+
+
 ## Documentação
 
 - [Guia de Configuração e Execução](SETUP.md) - **Instruções detalhadas para configurar e executar o sistema no Windows e WSL**
