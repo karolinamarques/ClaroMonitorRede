@@ -1,0 +1,51 @@
+ticket_id,timestamp,status,priority,category,resolution_time,customer_feedback,agent,location,error_code,error_description
+101,2023-08-14 08:45:00,open,high,connectivity,, ,Ana Lima,São Paulo,ERR001,Connection timeout
+102,2023-08-14 09:00:00,closed,medium,billing,30,4,Carlos Silva,Rio de Janeiro,, 
+103,2023-08-14 09:30:00,closed,low,speed,45,5,Daniela Souza,Belo Horizonte,, 
+104,2023-08-14 10:00:00,open,high,outage,, ,Fernando Costa,Porto Alegre,ERR002,System overload detected
+105,2023-08-14 10:15:00,open,medium,hardware,, ,Gabriela Alves,Curitiba,ERR003,Internally generated hardware error
+106,2023-08-14 10:30:00,closed,high,connectivity,90,3,Hugo Pereira,Fortaleza,, 
+107,2023-08-14 11:00:00,closed,medium,speed,60,5,Isabela Martins,Salvador,, 
+108,2023-08-14 11:30:00,open,low,billing,, ,João Fernandes,Recife,ERR004,Invalid billing information
+109,2023-08-14 12:00:00,closed,high,outage,120,2,Karen Oliveira,Campinas,, 
+110,2023-08-14 12:30:00,closed,medium,hardware,45,4,Lucas Ribeiro,Brasília,, 
+111,2023-08-14 13:00:00,open,low,speed,, ,Mariana Machado,Florianópolis,ERR005,Network latency
+112,2023-08-14 13:30:00,closed,high,connectivity,75,4,Nicolas Santos,Manaus,, 
+113,2023-08-14 14:00:00,closed,medium,outage,90,3,Olívia Barros,Vitória,, 
+114,2023-08-14 14:30:00,open,medium,billing,, ,Pedro Mendes,São Luís,ERR006,Billing system unavailable
+115,2023-08-14 15:00:00,closed,low,hardware,50,5,Raquel Carvalho,João Pessoa,, 
+116,2023-08-14 15:30:00,open,high,speed,, ,Sérgio Batista,Natal,ERR007,Speed test failed
+117,2023-08-14 16:00:00,closed,medium,connectivity,65,4,Tereza Azevedo,Campo Grande,, 
+118,2023-08-14 16:30:00,closed,high,outage,105,3,Vitor Figueiredo,Teresina,, 
+119,2023-08-14 17:00:00,open,low,billing,, ,Ana Clara Mendes,Maceió,ERR008,Payment not processed
+120,2023-08-14 17:30:00,closed,medium,hardware,70,2,Bernardo Matos,Aracaju,, 
+121,2023-08-14 18:00:00,open,high,speed,, ,Carla Ferreira,Uberlândia,ERR009,Speed connectivity issue
+122,2023-08-14 18:30:00,closed,low,connectivity,55,5,Davi Costa,Santos,, 
+123,2023-08-14 19:00:00,open,medium,outage,, ,Elena Rocha,Niterói,ERR010,Power failure
+124,2023-08-14 19:30:00,closed,high,billing,90,3,Francisco Teixeira,Ribeirão Preto,, 
+125,2023-08-14 20:00:00,open,low,hardware,, ,Gustavo Almeida,Blumenau,ERR011,Device compatibility error
+126,2023-08-14 20:30:00,closed,medium,speed,80,4,Henrique Amaral,Joinville,, 
+127,2023-08-14 21:00:00,open,high,connectivity,, ,Isis Correia,Anápolis,ERR012,Connection dropped
+128,2023-08-14 21:30:00,closed,low,outage,95,2,Julio Lima,Cuiabá,, 
+129,2023-08-14 22:00:00,open,medium,billing,, ,Katia Simonetti,Porto Velho,ERR013,Incorrect charge applied
+130,2023-08-14 22:30:00,closed,high,hardware,110,3,Lucas Andrade,Palmas,, 
+131,2023-08-14 23:00:00,closed,low,speed,60,4,Marcela Silva,Macapá,, 
+132,2023-08-14 23:30:00,open,medium,connectivity,, ,Natan Cruz,Boa Vista,ERR014,Inconsistent network status
+133,2023-08-15 00:00:00,closed,high,outage,100,5,Olavo Dantas,Londrina,, 
+134,2023-08-15 00:30:00,open,low,billing,, ,Paula Oliveira,Maringá,ERR015,System billing query failed
+135,2023-08-15 01:00:00,closed,medium,hardware,55,2,Rafael Pires,Vitória da Conquista,, 
+136,2023-08-15 01:30:00,open,high,speed,, ,Sara Barbosa,Petrópolis,ERR016,Speed measurement timeout
+137,2023-08-15 02:00:00,closed,low,connectivity,75,3,Telma Moreira,Bauru,, 
+138,2023-08-15 02:30:00,open,medium,outage,, ,Ugo Andrade,Campos dos Goytacazes,ERR017,Outage prediction failure
+139,2023-08-15 03:00:00,closed,high,billing,85,4,Vera Couto,Angra dos Reis,, 
+140,2023-08-15 03:30:00,open,low,hardware,, ,William Carvalho,Praia Grande,ERR018,Firmware not updated
+141,2023-08-15 04:00:00,closed,medium,connectivity,60,5,Ana Lima,São Paulo,, 
+142,2023-08-15 04:30:00,closed,high,speed,75,3,Carlos Silva,Rio de Janeiro,, 
+143,2023-08-15 05:00:00,open,medium,connectivity,, ,Daniela Souza,Belo Horizonte,ERR019,Network authentication failed
+144,2023-08-15 05:30:00,closed,low,hardware,45,4,Fernando Costa,Porto Alegre,, 
+145,2023-08-15 06:00:00,open,high,outage,, ,Gabriela Alves,Curitiba,ERR020,Outage detection failure
+146,2023-08-15 06:30:00,closed,medium,billing,55,2,Hugo Pereira,Fortaleza,, 
+147,2023-08-15 07:00:00,closed,high,speed,90,5,Isabela Martins,Salvador,, 
+148,2023-08-15 07:30:00,open,low,billing,, ,João Fernandes,Recife,ERR021,Incorrect invoice sent
+149,2023-08-15 08:00:00,closed,medium,connectivity,85,4,Karen Oliveira,Campinas,, 
+150,2023-08-15 08:30:00,open,high,outage,, ,Lucas Ribeiro,Brasília,ERR022,Undetected outage nearby
